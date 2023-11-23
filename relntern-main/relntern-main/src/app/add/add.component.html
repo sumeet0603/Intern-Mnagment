@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Relntern Manager</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+  <style>
+    .avatar {
+      vertical-align: middle;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+    }
+
+    button:hover {
+      background-color: #4CAF50;
+      color: white;
+      transition: ease 0.5s;
+    }
+
+    @keyframes typing {
+      from {
+        width: 0;
+      }
+    }
+
+    @keyframes blink {
+      50% {
+        border-color: transparent;
+      }
+    }
+
+    #dashboard-menu:hover {
+      transform: translate(-1.5%, -1.5%);
+      transition: transform 0.45s;
+    }
+
+    #table-div{
+      margin-bottom: 10px;
+    }
+
+  </style>
+
+</head>
+
+<body class="bg-white-100">
+  <nav>
+    <header class="bg-white py-4">
+      <div class="container mx-auto flex justify-between items-center px-4">
+        <h1 class="text-black text-xl font-bold flex items-center">
+          <img class="mx-auto h-10 w-auto"
+            src="https://1000logos.net/wp-content/uploads/2021/08/Reliance-Industries-Limited-RIL-Logo-500x314.jpg"
+            alt="Your Company" (click)="goToPage('dashboard')">
+
+        </h1>
+        <nav>
+          <ul class="flex space-x-4 text-black">
+            <li>
+              <a><h2 class=" text-black font-bold py-2 px-4 rounded mt-4">
+                  {{roledesc}}</h2 ></a>
+           </li>
+            <li id="Add_Mentor"><button type="button"
+                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
+                (click)="goToPage('inactive')">Past Interns</button></li>
+            <li id="Add_Mentor"><button type="button"
+                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
+                (click)="goToPage('list')">Active Interns</button></li>
+            <li id="Add_Mentor"><button type="button"
+                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
+                (click)="goToPage('mentorlist')">Mentor List</button></li>
+            <li id="Add_Mentor"><button type="button"
+                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
+                (click)="logout()">Logout</button></li>
+
+          </ul>
+        </nav>
+      </div>
+    </header>
+  </nav>
+
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a (click)="navigateTo()">Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Add Intern</li>
+    </ol>
+  </nav>
+
+  <main class="container mx-auto mt-8 px-4">
+    <div class="bg-white rounded-lg shadow-lg p-8">
+      <h2 class="text-2xl font-bold mb-4">Add Intern</h2>
+      <form #registerForm="ngForm" (ngSubmit)="register(registerForm)">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div>
+            <label class="block text-gray-700 font mb-2" for="fullname">Full Name</label>
+            <input type="text" id="fullname" name="fullname"
+              class="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Enter full name" #fullname (ngModel)="fullname" required>
+
+          </div>
+
+          <div>
+            <label class="block text-gray-700 font mb-2" for="email">Email</label>
+            <input type="email" id="email" name="email"
+              class="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Enter email address" #internemail (ngModel)="internemail" required>
+          </div>
+
+          <div>
+            <label class="block text-gray-700 font mb-2" for="mentor">Mentor</label>
+            <select id="mentor" name="mentor" class="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500" #mentor (ngModel)="mentor">
+              <option *ngFor="let mentor of mentors" [value]="mentor.mentorname">{{ mentor.mentorname }}</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-gray-700 font mb-2" for="mentoremail">Mentor Email</label>
+            <input type="text" id="mentoremail" name="mentoremail"
+              class="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Enter mentor's email" #mentoremail (ngModel)="mentoremail" required>
+          </div>
+          <div>
+            <label class="block text-gray-700 font mb-2" for="email">Project Name</label>
+            <input type="text" id="projectname" name="projectname"
+              class="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Enter project name" #projectname (ngModel)="projectname" required>
+          </div>
+          <div>
+            <label class="block text-gray-700 font mb-2" for="email">Project Status</label>
+            <input type="text" id="projectstatus" name="projectstatus"
+              class="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Please enter the percentage" #projectstatus (ngModel)="projectstatus" required>
+          </div>
+          <div>
+            <label class="block text-gray-700 font mb-2" for="startDate">Start Date</label>
+            <input type="date" id="startDate" name="startDate"
+              class="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+              #startdate (ngModel)="startdate" required>
+          </div>
+          <div>
+            <label class="block text-gray-700 font mb-2" for="endDate">End Date</label>
+            <input type="date" id="endDate" name="endDate"
+              class="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+              #enddate (ngModel)="enddate" required>
+          </div>
+          <div>
+            <label class="block text-gray-700 font mb-2" for="role">Technical Skillset</label>
+            <input type="data" id="role" name="role"
+              class="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Enter intern role" #role (ngModel)="role" required>
+          </div>
+
+          <div>
+            <label class="block text-gray-700 font mb-2" for="association">Association</label>
+            <select id="association" name="association"
+              class="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+              #association (ngModel)="association" required>
+              <option value="" disabled selected>Select association</option>
+              <option value="PetChem IT">PetChem IT</option>
+              <option value="Finance">Finance</option>
+              <option value="Marketing">Marketing</option>
+              <option value="HR">HR</option>
+            </select>
+          </div>
+          <div class="col-span-2">
+            <label class="block text-gray-700 font mb-2" for="reference">Reference</label>
+            <input type="text" id="reference" name="reference"
+              class="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Enter reference name here" #reference (ngModel)="reference" required>
+          </div>
+
+          <h2 class="text-2xl font-bold mb-4">Academic Details</h2>
+          <div>
+
+          </div>
+          <div>
+            <label class="block text-gray-700 font mb-2" for="uniname">University Name</label>
+            <input type="text" id="uniname" name="uniname"
+              class="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Enter University Name" #uniname (ngModel)="uniname" required>
+          </div>
+          <div>
+            <label class="block text-gray-700 font mb-2" for="coursename">Graduation</label>
+            <input type="text" id="coursename" name="coursename"
+              class="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Ex. BTech, BE, BBA ...etc" #coursename (ngModel)="coursename" required>
+          </div>
+          <div>
+            <label class="block text-gray-700 font mb-2" for="specialization">Specialization</label>
+            <input type="text" id="specialization" name="specialization"
+              class="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Please enter your major" #specialization (ngModel)="specialization" required>
+          </div>
+          <div>
+            <label class="block text-gray-700 font mb-2" for="gradyear">Graduation Date</label>
+            <input type="date" id="gradyear" name="gradyear"
+              class="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+               #gradyear (ngModel)="gradyear" required>
+          </div>
+
+          <h2 class="text-2xl font-bold mb-4">Internship Details</h2>
+          <div>
+
+          </div>
+          <div>
+            <label class="block text-gray-700 font mb-2" for="uniname">Quarter Details: </label>
+            <select id="quarter" name="quarter"
+              class="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+              #quarter (ngModel)="quarter" required>
+              <option value="" disabled selected>Choose Quarter</option>
+              <option value="Q1">Q1</option>
+              <option value="Q2">Q2</option>
+              <option value="Q3">Q3</option>
+              <option value="Q4">Q4</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-gray-700 font mb-2" for="coursename">LinkedIn URL</label>
+            <input type="url" id="linkedlink" name="linkedlink"
+              class="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="For ex : www.linkedin.com/profilename " #linkedlink (ngModel)="linkedlink" required>
+          </div>
+
+        </div>
+
+        <div class="mt-6">
+          <ul class="flex space-x-4 text-black">
+            <li><button type="submit" value="Register"
+                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                 Save
+              </button></li>
+            <li><button type="cancel" (click)="navigateTo()"
+                class="bg-500 hover:bg-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500" style=" background-color: #7c0d0d;">
+                Cancel
+              </button></li>
+          </ul>
+        </div>
+      </form>
+    </div>
+  </main>
+
+</body>

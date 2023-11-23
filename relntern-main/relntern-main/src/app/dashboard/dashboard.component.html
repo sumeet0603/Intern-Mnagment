@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Relntern Manager</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css">
+  <!-- Add this script section in the head of your HTML -->
+</head>
+
+<body class="bg-white-100">
+  <nav>
+    <header class="bg-white py-4">
+      <div class="container mx-auto flex justify-between items-center px-4">
+        <h1 class="text-black text-xl font-bold flex items-center">
+          <img class="mx-auto h-10 w-auto"
+            src="https://1000logos.net/wp-content/uploads/2021/08/Reliance-Industries-Limited-RIL-Logo-500x314.jpg"
+            alt="Your Company">
+
+        </h1>
+        <nav>
+          <ul class="flex space-x-4 text-black">
+            <!-- <li id="Add_Mentor"><button type="button"
+                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
+                (click)="goToPage('inactive')">Past Interns</button></li>
+            <li id="Add_Mentor"><button type="button"
+                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
+                (click)="goToPage('addmentor')">Add Mentor</button></li>
+            <li id="Add_Mentor"><button type="button"
+                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
+                (click)="goToPage('mentorlist')">Mentor List</button></li> -->
+                <li>
+                  <a><h2 class=" text-black font-bold py-2 px-4 rounded mt-4">
+                    {{roledesc}}</h2 ></a>
+                </li>
+            <li id="Add_Mentor"><button type="button"
+                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
+                (click)="logout()">Logout</button></li>
+
+          </ul>
+        </nav>
+      </div>
+    </header>
+  </nav>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item active" aria-current="page">Home</li>
+    </ol>
+  </nav>
+  <main class="container mx-auto mt-8 px-4">
+    <h2 class="text-2xl font-bold mb-4">Welcome to Relntern </h2>
+    <p class="text-gray-700 mb-4">Choose an option below:</p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 ">
+      <div class="bg-white rounded-lg p-6 shadow-lg hover:shadow-xl" id="dashboard-menu">
+        <h3 class="text-xl font-bold mb-2" id="add-intern-text">Add Interns</h3>
+        <p class="text-gray-700">Click here to add a new intern</p>
+        <button type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
+          (click)="goToPage('add')">Add Intern</button>
+      </div>
+
+      <div class="bg-white rounded-lg p-6 shadow-lg hover:shadow-xl" id="dashboard-menu">
+        <h3 class="text-xl font-bold mb-2">List of Interns</h3>
+        <p class="text-gray-700">View list of interns</p>
+        <button type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
+          (click)="goToPage('list')">View List</button>
+      </div>
+      <div class="bg-white rounded-lg p-6 shadow-lg hover:shadow-xl" id="dashboard-menu">
+        <h3 class="text-xl font-bold mb-2">Slot List</h3>
+        <p class="text-gray-700">Click here to view available slots</p>
+        <button type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
+          (click)="goToPage('schedule')">Slot List</button>
+      </div>
+      <div class="bg-white rounded-lg p-6 shadow-lg hover:shadow-xl" id="dashboard-menu">
+        <h3 class="text-xl font-bold mb-2">Past Interns</h3>
+        <p class="text-gray-700">Click here to view the past interns</p>
+        <button type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
+          (click)="goToPage('inactive')">View List</button>
+      </div>
+      <div class="bg-white rounded-lg p-6 shadow-lg hover:shadow-xl" id="dashboard-menu">
+        <h3 class="text-xl font-bold mb-2">Add Mentor</h3>
+        <p class="text-gray-700">Click here to add mentor</p>
+        <button type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
+          (click)="goToPage('addmentor')">Add Mentor</button>
+      </div>
+      <div class="bg-white rounded-lg p-6 shadow-lg hover:shadow-xl" id="dashboard-menu">
+        <h3 class="text-xl font-bold mb-2">Mentor List</h3>
+        <p class="text-gray-700">Click here to view mentor list</p>
+        <button type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
+          (click)="goToPage('mentorlist')">View Mentor list</button>
+      </div>
+    </div>
+  </main>
+
+<div class="container mx-auto mt-8 px-4" >
+  <h2>Scroll Down to view recent interns</h2>
+</div>
+
+  <div class="container mx-auto mt-8 px-4" id="table-body" id="table-pagination">
+    <div id="table-div" class="bg-white rounded-lg shadow-lg overflow-hidden">
+      <table class="min-w-full table-auto">
+        <thead>
+          <tr class="bg-gray-200">
+            <th scope="col" class="py-2 px-4">Intern ID</th>
+            <th scope="col" class="py-2 px-4">Full Name</th>
+            <th scope="col" class="py-2 px-4">Mentor</th>
+            <th scope="col" class="py-2 px-4">End Date</th>
+            <th scope="col" class="py-2 px-4">Association</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let interns of internDetails" id="dashboard-list" (click)="openDialog(interns)">
+            <td class="py-2 px-4">{{interns.id}}</td>
+            <td class="py-2 px-4"><button id="view-profile" (click)="openDialog(interns)">{{interns.fullname}}</button>
+            </td>
+            <td class="py-2 px-4">{{interns.mentor}}</td>
+            <td class="py-2 px-4">{{interns.endDate}}</td>
+            <td class="py-2 px-4">{{interns.association}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</body>
+
+
+<footer class="p-4 bg-white md:p-8 lg:p-10 dark:bg-gray-800">
+  <div class="mx-auto max-w-screen-xl text-center">
+      <a href="#" class="flex justify-center items-center text-2xl font-semibold text-gray-900 dark:text-white">
+          <svg class="mr-2 h-8" viewBox="0 0 33 33" fill="none" xmlns="http://www.w3.org/2000/svg"></svg>
+          Relntern   
+      </a>
+
+      <p class="my-6 text-gray-500 dark:text-gray-400">Relntern- Managing made easy</p>
+      <ul class="flex flex-wrap justify-center items-center mb-6 text-gray-900 dark:text-white">
+          
+      </ul>
+      <span class="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2023-2026 <a href="#" class="hover:underline">Relntern</a>. Developed by Intern.</span>
+  </div>
+</footer>
+</html>
